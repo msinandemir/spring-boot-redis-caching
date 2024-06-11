@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
                 .findAll()
                 .stream()
                 .map(user -> new GetUserResponse(user.getId(), user.getCreatedAt(), user.getUpdatedAt(), user.getUsername(), user.getPassword())
-                ).toList();
+                ).collect(Collectors.toList());
     }
 
 
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
         return new GetUserResponse(foundUser.getId(), foundUser.getCreatedAt(), foundUser.getUpdatedAt(), foundUser.getUsername(), foundUser.getPassword());
     }
 
-    @CacheEvict(cacheNames = {"users","user"}, allEntries = true)
+    @CacheEvict(cacheNames = {"users", "user"}, allEntries = true)
     @Override
     public AddUserResponse addUser(AddUserRequest request) {
         User user = new User();
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         return new AddUserResponse(savedUser.getId(), savedUser.getCreatedAt(), savedUser.getUpdatedAt(), savedUser.getUsername(), savedUser.getPassword());
     }
 
-    @CacheEvict(cacheNames = {"users","user"}, allEntries = true)
+    @CacheEvict(cacheNames = {"users", "user"}, allEntries = true)
     @Override
     public void deleteUserById(Long userId) {
         User foundUser = findUserById(userId);
