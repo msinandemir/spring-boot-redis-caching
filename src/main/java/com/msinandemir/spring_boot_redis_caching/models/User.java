@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
@@ -22,10 +22,10 @@ public class User {
     private Long id;
 
     @CreationTimestamp
-    private Date createdAt;
+    private Instant createdAt;
 
     @UpdateTimestamp
-    private Date updatedAt;
+    private Instant updatedAt;
 
     private String username;
     private String password;
